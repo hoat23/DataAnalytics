@@ -25,6 +25,23 @@ def make_dataframe(cols,ind):
     data = {c: [str(c) + str(i) for i in ind] for c in cols}
     return pd.Dataframe(data,ind)
 
+class display(object):
+    """Display HTML representation of multiple objects"""
+    template = """<div style="float: left; padding: 10px;">
+    <p style='font-family:"Courier New", Courier, monospace'>{0}</p>{1}
+    </div>"""
+    def __init__(self, *args):
+        self.args = args
+        
+    def _repr_html_(self):
+        return '\n'.join(self.template.format(a, eval(a)._repr_html_())
+                         for a in self.args)
+    
+    def __repr__(self):
+        return '\n\n'.join(a + '\n' + repr(eval(a))
+                           for a in self.args)
+    
+
 if __name__ == "__main__":
     x = np.array([2,1,4,3,5])
     print("x = {0}".format(x))
@@ -109,5 +126,23 @@ if __name__ == "__main__":
             # use some zip magic to make it happen:
             plt.plot(*zip(X[j], X[i]), color='black')
 
+    # Creating a dataframes
+    x = make_dataframe('AB', [0,1])
+    y = make_dataframe('BC', [2,3])
+
+    y.index = x.index # creating duplicates index
+    print("x:\n{0}".format(x))
+    print("y:\n{0}".format(x))
+    
+    x_y = pd.concat( [x,y] )
+    print("pd.concat( [x,y] )=\n{0}".format(x_y))
+
+    #Catching the repeats index as an error
+    try:
+        pd.concat( [x,y], verify_integrity=True)
+    except ValueError as e:
+        print("Index duplicated | Value Error: {0}".format(e))
+        print("Try executing: pd.concat([x,y], ignore_index=True)")
+    
     pass
 
