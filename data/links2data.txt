@@ -1,0 +1,13 @@
+
+
+
+
+
+
+
+# Following are shell commands to download the data
+# curl -O https://raw.githubusercontent.com/jakevdp/data-USstates/master/state-population.csv
+# curl -O https://raw.githubusercontent.com/jakevdp/data-USstates/master/state-areas.csv
+# curl -O https://raw.githubusercontent.com/jakevdp/data-USstates/master/state-abbrevs.csv
+# curl -o FremontBridge.csv https://data.seattle.gov/api/views/65db-xm6k/rows.csv?accessType=DOWNLOAD
+# curl -O https://raw.githubusercontent.com/jakevdp/marathon-data/master/marathon-data.csv
