@@ -1,0 +1,3309 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass article
+\begin_preamble
+\usepackage{fancyhdr} % activamos el paquete
+\usepackage{xcolor}
+\usepackage{textcomp}
+\usepackage{listings}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+\lstdefinestyle{mystyle}
+{
+    backgroundcolor=\color{backcolour},
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,
+    breaklines=true,
+    captionpos=b,
+    keepspaces=true,
+    numbers=left,
+    numbersep=5pt,
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+    tabsize=2
+}
+
+
+\pagestyle{fancy} % seleccionamos un estilo
+%\lhead{TEXTO LEFT} % texto izquierda de la cabecera
+%\chead{TEXTO CENTER} % texto centro de la cabecera
+%\rhead{\thepage} % número de página a la derecha
+%\lfoot{TEXTO LEFT} % texto izquierda del pie
+%\cfoot{\includegraphics[width=11cm]{logo}} % imagen centro del pie
+\cfoot{Deiner Zapata S.}
+\rfoot{\thepage} % texto derecha del pie
+\renewcommand{\headrulewidth}{0.4pt} % grosor de la línea de la cabecera
+\renewcommand{\footrulewidth}{0.4pt} % grosor de la línea del pie
+\end_preamble
+\use_default_options true
+\maintain_unincluded_children false
+\language spanish-mexico
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\float_placement H
+\paperfontsize default
+\spacing single
+\use_hyperref true
+\pdf_author "Deiner Lalix Zapata"
+\pdf_bookmarks true
+\pdf_bookmarksnumbered false
+\pdf_bookmarksopen false
+\pdf_bookmarksopenlevel 1
+\pdf_breaklinks false
+\pdf_pdfborder false
+\pdf_colorlinks true
+\pdf_backref false
+\pdf_pdfusetitle true
+\papersize a4paper
+\use_geometry true
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 2cm
+\topmargin 4cm
+\rightmargin 2cm
+\bottommargin 4cm
+\headheight 2cm
+\headsep 2cm
+\footskip 3cm
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style french
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+Machine Learning
+\end_layout
+
+\begin_layout Section
+Regresión Lineal Simple
+\end_layout
+
+\begin_layout Standard
+En Scikit-Learn cada clase del modelo es representado por una clase Python.
+ Si queremos calcular una regresió lineal simple, nosotros importamos la
+ clase 
+\begin_inset Quotes eld
+\end_inset
+
+Regresión Linear
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float algorithm
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{lstlisting}[language=Python,style=mystyle]
+\end_layout
+
+\begin_layout Plain Layout
+
+from sklearn.linear_model import LinearRegression
+\end_layout
+
+\begin_layout Plain Layout
+
+import matplotlib.pyplot as plt
+\end_layout
+
+\begin_layout Plain Layout
+
+import numpy as np
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+#Semilla para generar los mismos numeros aleatorios
+\end_layout
+
+\begin_layout Plain Layout
+
+rng = np.random.RandomState(42)
+\end_layout
+
+\begin_layout Plain Layout
+
+x = 10 * rng.rand(50)
+\end_layout
+
+\begin_layout Plain Layout
+
+y = 2 * x - 1 + rng.randn(50)
+\end_layout
+
+\begin_layout Plain Layout
+
+plt.scatter
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{lstlisting}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Generación de datos
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+La ecuación que se trata de encontrar es:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+f\left(x\right):=y=2\cdot x+1
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Claramente tiene una intersección en el eje y=1, por tal motivo usamos 
+\begin_inset Quotes eld
+\end_inset
+
+fit_intercept=True
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float algorithm
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{lstlisting}[language=Python,style=mystyle]
+\end_layout
+
+\begin_layout Plain Layout
+
+# Instanciando un objeto modelo de la clase 
+\begin_inset Quotes eld
+\end_inset
+
+LinealRegression
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+model =LinealRegression(fit_intercept=True)
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+# Convirtiendo los ventores en matrices
+\end_layout
+
+\begin_layout Plain Layout
+
+X=x[: , np.newaxis]
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+# Entrenando el modelo con los datos
+\end_layout
+
+\begin_layout Plain Layout
+
+model.fit(X,y)
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+# Obteniendo los coeficientes y = A*x + B
+\end_layout
+
+\begin_layout Plain Layout
+
+A = model.coef_
+\end_layout
+
+\begin_layout Plain Layout
+
+B = model.intercept_
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{lstlisting}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Entrenando el modelo lineal
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Después de tener el modelo lineal entrenado, se procederá a predecir nuevos
+ valores usando el modelo previamente entrenado, tal como se muestra acontinuaci
+ón:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float algorithm
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{lstlisting}[language=Python,style=mystyle]
+\end_layout
+
+\begin_layout Plain Layout
+
+# Generando nuevos datos
+\end_layout
+
+\begin_layout Plain Layout
+
+xfit = np.linspace(-1,11)
+\end_layout
+
+\begin_layout Plain Layout
+
+# Convirtiendo los datos en matriz
+\end_layout
+
+\begin_layout Plain Layout
+
+Xfit = xfit[:, np.newaxis]
+\end_layout
+
+\begin_layout Plain Layout
+
+# Calculando los nuevos valores con el modelo entrenado
+\end_layout
+
+\begin_layout Plain Layout
+
+yfit = model.predict(Xfit)
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{lstlisting}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Prediciendo nuevos valores con el modelo lineal
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Regresión Polinomial
+\end_layout
+
+\begin_layout Standard
+Tomando un modelo multidimencional lineal de la forma:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+y=a_{0}+a_{1}\cdot x_{1}+a_{2}\cdot x_{2}+a_{3}\cdot x_{3}+\ldots
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Donde los coeficientes 
+\begin_inset Formula $x_{n}$
+\end_inset
+
+ están determinados por una función que transforma los datos 
+\begin_inset Formula $f_{n}\left(x\right)=x^{n}$
+\end_inset
+
+, nuestro modelo se convierte en una regresión polinomial:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+y=a_{0}+a_{1}\cdot x+a_{2}\cdot x^{2}+a_{3}\cdot x^{3}+\ldots
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Denotando que esto es todavía un modelo lineal, haciendo referente a encontrar
+ los coeficientes 
+\begin_inset Formula $a_{n}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsection
+Funciones Polinomiales Básicas
+\end_layout
+
+\begin_layout Standard
+Esta proyección polinomial es muy util y Scikit-Learn viene integrada con
+ una funcionalidad para cacular los 
+\begin_inset Formula $x^{n}$
+\end_inset
+
+, para ello se usara 
+\series bold
+PolinomialFeatures 
+\series default
+transformer:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float algorithm
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{lstlisting}[language=Python,style=mystyle]
+\end_layout
+
+\begin_layout Plain Layout
+
+from sklearn.preprocessing import PolynomialFeatures
+\end_layout
+
+\begin_layout Plain Layout
+
+x = np.array([2, 3, 4])
+\end_layout
+
+\begin_layout Plain Layout
+
+poly = PolynomialFeatures(3, include_bias=False)
+\end_layout
+
+\begin_layout Plain Layout
+
+poly.fit_transform(x[:,None])
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{lstlisting}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Usando 
+\begin_inset Quotes eld
+\end_inset
+
+PolinomialFeatures
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+La salida mostrada en pantalla será 
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+array([[ 2.,  4.,  8.],
+\end_layout
+
+\begin_layout Plain Layout
+
+       [ 3.,  9., 27.],
+\end_layout
+
+\begin_layout Plain Layout
+
+       [ 4., 16., 64.]])
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Esta transformación a convertido un arreglo unidimensional en un arreglo
+ tridimensional, con este nuevo arreglo multidimensional, podemos realizar
+ una regresión lineal.
+ La mejor forma de hacer esto es usar un pipeline.
+\end_layout
+
+\begin_layout Standard
+Haciendo que el modelo polinomial tenga 7 grados:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float algorithm
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{lstlisting}[language=Python,style=mystyle]
+\end_layout
+
+\begin_layout Plain Layout
+
+from sklearn.pipeline import make_pipeline
+\end_layout
+
+\begin_layout Plain Layout
+
+degree = 7
+\end_layout
+
+\begin_layout Plain Layout
+
+poly_model = make_pipeline( PolynomialFeatures(degree), LinealRegression()
+ )
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{lstlisting}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Instanciando modelo polinomial de 7 grados
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Con esta transformación, podemos construir un modelo mucho mas complejo
+ que relacione 
+\begin_inset Quotes eld
+\end_inset
+
+x
+\begin_inset Quotes erd
+\end_inset
+
+ e 
+\begin_inset Quotes eld
+\end_inset
+
+y
+\begin_inset Quotes erd
+\end_inset
+
+.
+ Por ejemplo, modelar una onda seno con ruido 
+\begin_inset Formula $\xi$
+\end_inset
+
+ :
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+y_{real}=\sin\left(x_{real}\right)+\xi
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float algorithm
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{lstlisting}[language=Python,style=mystyle]
+\end_layout
+
+\begin_layout Plain Layout
+
+rng = np.random.RandomState(1)
+\end_layout
+
+\begin_layout Plain Layout
+
+# Generando 50 datos aleatorios desde 0 a 10.
+\end_layout
+
+\begin_layout Plain Layout
+
+x = 10 * rng.rand(50)
+\end_layout
+
+\begin_layout Plain Layout
+
+y = np.sin(x) + 0.1 * rng.randn(50)
+\end_layout
+
+\begin_layout Plain Layout
+
+poly_model.fit(x[:, np.newaxis], y)
+\end_layout
+
+\begin_layout Plain Layout
+
+xfit = np.linspace(0, 10, 1000)
+\end_layout
+
+\begin_layout Plain Layout
+
+yfit = poly_model.predict( xfit[:, np.newaxis])
+\end_layout
+
+\begin_layout Plain Layout
+
+plt.scatter(x,y)
+\end_layout
+
+\begin_layout Plain Layout
+
+plt.plot(xfit, yfit)
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{lstlisting}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Modelado polinomial de una función senoidal
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Regresión con Funciones Básicas Gausianas
+\end_layout
+
+\begin_layout Standard
+Otra forma de modelar los datos es usar una suma de funciones Gausianas
+ como base.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename CompositionFromGaussianFunction.png
+	scale 80
+	rotateOrigin center
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Modelado a partir de funciones Gausianas
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Las funciones Gaussianas basicas no estan construidas en Scikit-Learn, poro
+ podemos escribir una transformador que los crea, tal como se muestra a
+ continuación:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float algorithm
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{lstlisting}[language=Python,style=mystyle]
+\end_layout
+
+\begin_layout Plain Layout
+
+from sklearn.base import BaseEstimator, TransformerMixin
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+class GaussianFeatures(BaseEstimator, TransformerMixin):
+\end_layout
+
+\begin_layout Plain Layout
+
+    """Uniformly spaced Gaussian features for one-dimensional input"""
+\end_layout
+
+\begin_layout Plain Layout
+
+    def __init__(self, N, width_factor=2.0):
+\end_layout
+
+\begin_layout Plain Layout
+
+        self.N = N
+\end_layout
+
+\begin_layout Plain Layout
+
+        self.width_factor = width_factor
+\end_layout
+
+\begin_layout Plain Layout
+
+         @staticmethod
+\end_layout
+
+\begin_layout Plain Layout
+
+    def _gauss_basis(x, y, width, axis=None):
+\end_layout
+
+\begin_layout Plain Layout
+
+        arg = (x - y) / width
+\end_layout
+
+\begin_layout Plain Layout
+
+        return np.exp(-0.5 * np.sum(arg ** 2, axis))
+\end_layout
+
+\begin_layout Plain Layout
+
+    
+\end_layout
+
+\begin_layout Plain Layout
+
+    def fit(self, X, y=None):
+\end_layout
+
+\begin_layout Plain Layout
+
+        # create N centers spread along the data range
+\end_layout
+
+\begin_layout Plain Layout
+
+        self.centers_ = np.linspace(X.min(), X.max(), self.N)
+\end_layout
+
+\begin_layout Plain Layout
+
+        self.width_ = self.width_factor * (self.centers_[1] - self.centers_[0])
+\end_layout
+
+\begin_layout Plain Layout
+
+        return self
+\end_layout
+
+\begin_layout Plain Layout
+
+    
+\end_layout
+
+\begin_layout Plain Layout
+
+    def transform(self, X):
+\end_layout
+
+\begin_layout Plain Layout
+
+        return self._gauss_basis(X[:, :, np.newaxis],
+\end_layout
+
+\begin_layout Plain Layout
+
+                                 self.centers_,
+\end_layout
+
+\begin_layout Plain Layout
+
+                                 self.width_, axis=1)
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+gauss_model = make_pipeline(GaussianFeatures(20),LinearRegression())
+\end_layout
+
+\begin_layout Plain Layout
+
+gauss_model.fit(x[:, np.newaxis], y)
+\end_layout
+
+\begin_layout Plain Layout
+
+yfit = gauss_model.predict(xfit[:, np.newaxis])
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+plt.scatter(x, y)
+\end_layout
+
+\begin_layout Plain Layout
+
+plt.plot(xfit, yfit)
+\end_layout
+
+\begin_layout Plain Layout
+
+plt.xlim(0, 10)
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{lstlisting}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Clase Gausiana
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+A continuación se muestra el modelo ajustado con los datos de entrada, como
+ se podra observar, no se ajusta mucho a una onda senoidal.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename FitSenoidalWithGaussFunctions.png
+	scale 80
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Modelado con funciones Gausianas 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Regresión Ridge o Regularización 
+\begin_inset Formula $L_{2}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+También llamada Tikhonov regularización.
+ Este tipo de regresión usa la penalización de la suma de cuadrados (2-norms)
+ del modelo de coeficientes, en este caso el modelo es:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+P=\alpha\cdot\sum_{n=1}^{N}\theta_{n}^{2}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Donde 
+\begin_inset Formula $\alpha$
+\end_inset
+
+ es un parametro libre que controla la fuerza de la penalidad, este modelo
+ ya viene implementado en Scikit-Learn con 
+\begin_inset Quotes fld
+\end_inset
+
+Ridge
+\begin_inset Quotes frd
+\end_inset
+
+:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float algorithm
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{lstlisting}[language=Python,style=mystyle]
+\end_layout
+
+\begin_layout Plain Layout
+
+from sklearn.lineal_model import Ridge
+\end_layout
+
+\begin_layout Plain Layout
+
+model = make_pipeline(GaussianFeatures(30), Ridge(aplha=0.1))
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+fig, ax = plt.subplots(2, sharex=True)
+\end_layout
+
+\begin_layout Plain Layout
+
+model.fit(x[:,np.newaxis],y)
+\end_layout
+
+\begin_layout Plain Layout
+
+ax[0].scatter(x,y)
+\end_layout
+
+\begin_layout Plain Layout
+
+ax[0].plot(xfit, model.predict(xfit[:,np.newaxis]))
+\end_layout
+
+\begin_layout Plain Layout
+
+ax[0].set(xlabel='x', ylabel='y', ylim=(-1.5,1.5))
+\end_layout
+
+\begin_layout Plain Layout
+
+ax[0].set_title(title)
+\end_layout
+
+\begin_layout Plain Layout
+
+ax[1].plot(model.steps[0][1].centers_,
+\end_layout
+
+\begin_layout Plain Layout
+
+           model.steps[1][1].coef_)
+\end_layout
+
+\begin_layout Plain Layout
+
+ax[1].set(xlabel='basis location',
+\end_layout
+
+\begin_layout Plain Layout
+
+          ylabel='coefficient',
+\end_layout
+
+\begin_layout Plain Layout
+
+          xlim=(0,10))
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{lstlisting}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Uso de 
+\begin_inset Quotes fld
+\end_inset
+
+Ridge
+\begin_inset Quotes frd
+\end_inset
+
+ en 
+\begin_inset Quotes fld
+\end_inset
+
+Scikit-Learn
+\begin_inset Quotes frd
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+El modelo ajusta mucho mejor la onda senoidal, también podemos observar
+ claramente como los coefientes varían para mejorar el ajuste.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename RidgeModeling.png
+	scale 80
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Regresión Ridge
+\end_layout
+
+\end_inset
+
+-
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Regressión Lasso o Regularización 
+\begin_inset Formula $L_{1}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Otra común regularización es conocidad como 
+\begin_inset Quotes fld
+\end_inset
+
+Lasso
+\begin_inset Quotes frd
+\end_inset
+
+, este se basa en penalizar la suma de los valores absolutos (1–norms) de
+ la regresión de los coeficientes.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+P=\alpha\cdot\sum_{n=1}^{N}\mid\theta_{n}\mid
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float algorithm
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{lstlisting}[language=Python,style=mystyle]
+\end_layout
+
+\begin_layout Plain Layout
+
+from sklearn.linear_model import Lasso
+\end_layout
+
+\begin_layout Plain Layout
+
+model = make_pipeline(GaussianFeatures(30), Lasso(alpha=0.001))
+\end_layout
+
+\begin_layout Plain Layout
+
+basis_plot(model, title='Lasso Regression')
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{lstlisting}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Regressión Lasso
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Esta regresión tiende a favorecer modelos dispersos cuando sea posible:
+ es decir, establece preferentemente los coeficientes del modelo exactamente
+ en cero.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename FitSenoidalWithLasso.png
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Modelado de onda senoidal usando Lasso
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Support Vector Machines (SVMs)
+\end_layout
+
+\begin_layout Standard
+Este tipo de modelado es particularmente poderoso y flexible algoritmos
+ de clasificación supervisado.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float algorithm
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{lstlisting}[language=Python,style=mystyle]
+\end_layout
+
+\begin_layout Plain Layout
+
+from sklearn.datasets.samples_generator import make_blobs
+\end_layout
+
+\begin_layout Plain Layout
+
+X,y = make_blobs(n_samples=50, centers=2,
+\end_layout
+
+\begin_layout Plain Layout
+
+                 random_state=0, cluster_std=0.60)
+\end_layout
+
+\begin_layout Plain Layout
+
+plt.scatter( X[:,0], X[:,1], c=y, s=50, cmap='autumn')
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{lstlisting}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Generando datos
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Un clasificador linear debería intentar dibujar una linea que separe los
+ dos tipos de datos.
+ Support vector machines ofrece una forma dibujar lineas que separen los
+ datos, permitiendo clasificarlos por clases.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename UseCaseOfSVMs.png
+	scale 80
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+SVM para clasificación
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Clasificador Naive Bayes
+\end_layout
+
+\begin_layout Standard
+Cargando los datos del 
+\begin_inset Quotes eld
+\end_inset
+
+iris
+\begin_inset Quotes erd
+\end_inset
+
+ (n_sampes x n_features)
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float algorithm
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{lstlisting}[language=Python,style=mystyle]
+\end_layout
+
+\begin_layout Plain Layout
+
+import seaborn as sns
+\end_layout
+
+\begin_layout Plain Layout
+
+iris = sns.load_dataset('iris')
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{lstlisting}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Cargando datos 
+\begin_inset Quotes eld
+\end_inset
+
+iris
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Una visualización parcial del dataframe se puede realizar ejecutando el
+ comando 
+\begin_inset Quotes eld
+\end_inset
+
+iris.head()
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float table
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="6" columns="6">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+sepal_length
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+sepal_width
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+petal_length
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+petal_width
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+species
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+5.1
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+3.5
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1.4
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.2
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+setosa
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+4.9
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+3.0
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1.4
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.2
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+setosa
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+2
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+4.7
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+3.2
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1.3
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.2
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+setosa
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+3
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+4.6
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+3.1
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1.5
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0.2
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+setosa
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+4
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+5.0
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+3.6
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+1.4
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+0,2
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+setosa
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+iris.head()
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+La matriz de características será 
+\begin_inset Quotes eld
+\end_inset
+
+X
+\begin_inset Quotes erd
+\end_inset
+
+ y el objetivo o target será la columna 
+\begin_inset Quotes eld
+\end_inset
+
+species
+\begin_inset Quotes erd
+\end_inset
+
+, el cual puede tomar 3 valores: 
+\begin_inset Quotes eld
+\end_inset
+
+setosa
+\begin_inset Quotes erd
+\end_inset
+
+, 
+\begin_inset Quotes eld
+\end_inset
+
+versicolor
+\begin_inset Quotes erd
+\end_inset
+
+ y 
+\begin_inset Quotes eld
+\end_inset
+
+virginica
+\begin_inset Quotes erd
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float algorithm
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{lstlisting}[language=Python,style=mystyle]
+\end_layout
+
+\begin_layout Plain Layout
+
+# Eliminamos la columna 'species' del dataframe
+\end_layout
+
+\begin_layout Plain Layout
+
+X_iris = iris.drop('species', axis=1)
+\end_layout
+
+\begin_layout Plain Layout
+
+# Almacenamos el target 
+\begin_inset Quotes eld
+\end_inset
+
+species
+\begin_inset Quotes erd
+\end_inset
+
+ en la variable 
+\begin_inset Quotes eld
+\end_inset
+
+y_iris
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+y_iris = iris['species']
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{lstlisting}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+\begin_inset Quotes eld
+\end_inset
+
+features
+\begin_inset Quotes erd
+\end_inset
+
+ & 
+\begin_inset Quotes eld
+\end_inset
+
+target
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Se procederá a dividir los datos en 2 tipos:
+\end_layout
+
+\begin_layout Itemize
+Training set: datos para el entrenamiento del modelo
+\end_layout
+
+\begin_layout Itemize
+Testing set: datos para probar el modelo entrenado
+\end_layout
+
+\begin_layout Standard
+Este tipo de partición de los datos puede ser manual, pero es mas conveniente
+ usar 
+\begin_inset Quotes eld
+\end_inset
+
+train_test_split
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float algorithm
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{lstlisting}[language=Python,style=mystyle]
+\end_layout
+
+\begin_layout Plain Layout
+
+#Deprecado: from sklearn.cross_validation import train_test_split
+\end_layout
+
+\begin_layout Plain Layout
+
+from sklearn.model_selection import train_test_split
+\end_layout
+
+\begin_layout Plain Layout
+
+Xtrain, Xtest, ytrain, ytest = train_test_split(X_iris, y_iris, random_state=1,
+ test_size=0.33)
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{lstlisting}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Dividiendo los datos en entrenamiento y prueba
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Para hacer la clasificación se va a realizar un modelo conocido como Naive
+ Bayes Gaussiano, asumiendo que cada clase parte de una distribución Gaussiana.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float algorithm
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{lstlisting}[language=Python,style=mystyle]
+\end_layout
+
+\begin_layout Plain Layout
+
+# 1.Choose model class
+\end_layout
+
+\begin_layout Plain Layout
+
+from sklearn.naive_bayes import GaussianNB
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+# 2.Instantiate model
+\end_layout
+
+\begin_layout Plain Layout
+
+model = GaussianNB()
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+# 3.Fit model to data
+\end_layout
+
+\begin_layout Plain Layout
+
+model.fit(Xtrain, ytrain)
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+# 4.Predict on new data
+\end_layout
+
+\begin_layout Plain Layout
+
+y_model = model.predict(Xtest)
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{lstlisting}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Entrenando el modelo Gaussiano
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Finalmente, podemos usar 
+\begin_inset Quotes eld
+\end_inset
+
+accuracy_score
+\begin_inset Quotes erd
+\end_inset
+
+ para ver la proporción predicha con respecto al valor verdadero.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float algorithm
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{lstlisting}[language=Python,style=mystyle]
+\end_layout
+
+\begin_layout Plain Layout
+
+from sklearn.metrics import accuracy_score
+\end_layout
+
+\begin_layout Plain Layout
+
+accuracy_score(ytest, ymodel)
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{lstlisting}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+accuracy_score
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Nuestro modelo tiene un 97.36% de precisión, como se puede observar el algoritmo
+ de clasificación naive es efectivo para este caso particular de datos.
+\end_layout
+
+\begin_layout Section
+Ejemplo 03: Reducción de componentes usando PCA
+\end_layout
+
+\begin_layout Standard
+Un ejemplo del problema del aprendizaje no supervisado es la reducción de
+ la dimensionalidad, para hacer más facil su visualización.
+ Usando los datos 
+\begin_inset Quotes eld
+\end_inset
+
+iris
+\begin_inset Quotes erd
+\end_inset
+
+, vamos extraer las características escenciales de la data.
+ A menudo, la reducción dimensional es usada para visualizar los datos de
+ forma más fácil en 2 dimensiones.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float algorithm
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{lstlisting}[language=Python,style=mystyle]
+\end_layout
+
+\begin_layout Plain Layout
+
+# 1.Choose the model class
+\end_layout
+
+\begin_layout Plain Layout
+
+from sklearn.decomposition import PCA
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+# 2.Instantiate the model with hyperparameters
+\end_layout
+
+\begin_layout Plain Layout
+
+model = PCA(n_components=2)
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+# 3.Fit to data.
+ Notice 'y' is not specified!
+\end_layout
+
+\begin_layout Plain Layout
+
+model.fit(X_iris)
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+# 4.Transform the data to two dimensions
+\end_layout
+
+\begin_layout Plain Layout
+
+X_2D = model.transform(X_iris)
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{lstlisting}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Análisis de Componentes Principales con los datos de 
+\begin_inset Quotes eld
+\end_inset
+
+iris
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Los datos de 
+\begin_inset Quotes eld
+\end_inset
+
+X_iris
+\begin_inset Quotes erd
+\end_inset
+
+ tiene 4 caracteristicas, las cuales fueron reducidas a 2 componentes en
+ 
+\begin_inset Quotes eld
+\end_inset
+
+X_2D
+\begin_inset Quotes erd
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float algorithm
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{lstlisting}[language=Python,style=mystyle]
+\end_layout
+
+\begin_layout Plain Layout
+
+iris['PCA1'] = X_2D[:,0]
+\end_layout
+
+\begin_layout Plain Layout
+
+iris['PCA2'] = X_2D[:,1]
+\end_layout
+
+\begin_layout Plain Layout
+
+sns.lmplot('PCA1','PCA2', hue='species', data=iris, fit_reg=False)
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{lstlisting}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Agregando PCA1 y PCA2 al dataframe 
+\begin_inset Quotes eld
+\end_inset
+
+iris.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+A continuación se muestran los nuevos datos en una representación bidimensional.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename ReductionPCA.png
+	scale 80
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+PCA1 y PCA2 de los datos 
+\begin_inset Quotes eld
+\end_inset
+
+iris
+\begin_inset Quotes erd
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Ejemplo 04: Clustering con Gaussian Mixture Model (GMM)
+\end_layout
+
+\begin_layout Standard
+A continuación se va a clasificar los datos usando un poderoso método llamado
+ Gaussian Mixture Model (GMM).
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float algorithm
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{lstlisting}[language=Python,style=mystyle]
+\end_layout
+
+\begin_layout Plain Layout
+
+# 1.Choose the model class
+\end_layout
+
+\begin_layout Plain Layout
+
+# Deprecated : from sklearn.mixture import GMM
+\end_layout
+
+\begin_layout Plain Layout
+
+from sklearn.mixture import GaussianMixture
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+# 2.Instantiate the model with hyperparameters
+\end_layout
+
+\begin_layout Plain Layout
+
+model = GMM(n_components=3, covariance_type='full')
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+# 3.Fit to data.
+ Notice 'y' is not specified!
+\end_layout
+
+\begin_layout Plain Layout
+
+model.fit(X_iris)
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+# 4.Determine cluster labels
+\end_layout
+
+\begin_layout Plain Layout
+
+y_gmm = model.predict(X_iris)
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{lstlisting}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Clustering con GMM
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Cargando la columna de datos predichos al dataframe 'iris'
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float algorithm
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{lstlisting}[language=Python,style=mystyle]
+\end_layout
+
+\begin_layout Plain Layout
+
+iris['cluster'] = y_gmm
+\end_layout
+
+\begin_layout Plain Layout
+
+sns.lmplot('PCA1', 'PCA2', data=iris, hue='species',
+\end_layout
+
+\begin_layout Plain Layout
+
+col='cluster', fit_reg=False)
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{lstlisting}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Graficando los datos clasificados con GMM
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+A continuación veremos los datos clasificados pero para tener una mejor
+ visualización usaremos PCA1 y PCA2, calculados anteriormente.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename GMM.png
+	scale 40
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+PCA1 y PCA2 usando GMM
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Como se puede observar en el 
+\begin_inset Quotes eld
+\end_inset
+
+cluster 0
+\begin_inset Quotes erd
+\end_inset
+
+, vemos 5 puntos de color naranja que en comparación con lo demás en general
+ es un pequeño error aceptable del modelo entrenado.
+\end_layout
+
+\begin_layout Part
+Hiperparametros y Validación de Modelos
+\end_layout
+
+\begin_layout Section
+Validar un modelo usando validación cruzada
+\end_layout
+
+\begin_layout Standard
+Para realizar la validación de forma rápida se utilizare 
+\begin_inset Quotes eld
+\end_inset
+
+train_test_split
+\begin_inset Quotes erd
+\end_inset
+
+, con el parámetro train_size=0.5 los datos seran divididos en 50% para entrenami
+ento y 50% para la validación.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float algorithm
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{lstlisting}[language=Python,style=mystyle]
+\end_layout
+
+\begin_layout Plain Layout
+
+from sklearn.cross_validation import train_test_split
+\end_layout
+
+\begin_layout Plain Layout
+
+from sklearn.metrics import accuracy_score
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+# split the data with 50% in each set
+\end_layout
+
+\begin_layout Plain Layout
+
+X1, X2, y1, y2 = train_test_split(X, y, random_state=0, train_size=0.5)
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+# fit and evalue the model
+\end_layout
+
+\begin_layout Plain Layout
+
+y2_model = model.fit(X1, y1).predict(X2)
+\end_layout
+
+\begin_layout Plain Layout
+
+y1_model = model.fit(X2, y2).predict(X1)
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+# compute the accuracy by every group
+\end_layout
+
+\begin_layout Plain Layout
+
+accuracy_score(y1,y1_model), accuracy_score(y2, y2_model)
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{lstlisting}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Validación cruzada usando 
+\begin_inset Quotes eld
+\end_inset
+
+train_test_split
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Podemos expandir para una validación cruzada y usarla para más pruebas,
+ por ejemplo separar en 5 grupos (cv=5) y validar cada grupom para ello
+ se usara 
+\begin_inset Quotes eld
+\end_inset
+
+cross_val_score
+\begin_inset Quotes erd
+\end_inset
+
+, se entrenara el model con 4/5 y se evaluara el modelo con el 1/5 restante.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float algorithm
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{lstlisting}[language=Python,style=mystyle]
+\end_layout
+
+\begin_layout Plain Layout
+
+from sklearn.cross_validation import cross_val_score
+\end_layout
+
+\begin_layout Plain Layout
+
+cross_vol_score(model, X, y, cv=5)
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{lstlisting}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Validación cruzada de 5 grupos usando 
+\begin_inset Quotes eld
+\end_inset
+
+cross_val_score
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+La respuesta es una <numpy.array> por ejemplo: array([0.96666667, 0.96666667,
+ 0.93333333, 1.
+ ])
+\end_layout
+
+\begin_layout Standard
+También podemos hacer una validación 
+\begin_inset Quotes eld
+\end_inset
+
+uno contra todos
+\begin_inset Quotes erd
+\end_inset
+
+, dejamos unicamente un dato para realizar la validación, para ello se usa
+ 
+\begin_inset Quotes eld
+\end_inset
+
+LeaveOneOut
+\begin_inset Quotes erd
+\end_inset
+
+, tal como se muestra a continuación:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float algorithm
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{lstlisting}[language=Python,style=mystyle]
+\end_layout
+
+\begin_layout Plain Layout
+
+from sklearn.cross_validation import LeaveOneOut
+\end_layout
+
+\begin_layout Plain Layout
+
+scores = cross_val_score(model, X, y, cv=LeaveOneOut(len(X)))
+\end_layout
+
+\begin_layout Plain Layout
+
+scores_mean = scores.mean()
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{lstlisting}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Validación cruzada uno contra todos usando 
+\begin_inset Quotes eld
+\end_inset
+
+LeaveOneOut
+\begin_inset Quotes erd
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Validación de curvas
+\end_layout
+
+\end_body
+\end_document
