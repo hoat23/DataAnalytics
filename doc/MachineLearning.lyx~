@@ -1610,12 +1610,543 @@ SVM para clasificación
 
 \end_layout
 
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+A continuación entrenaremos el SVM de Scikit-Learn con esos datos, notando
+ que el paraemtro C=1E10 será explicado más adelante.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float algorithm
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{lstlisting}[language=Python,style=mystyle]
+\end_layout
+
+\begin_layout Plain Layout
+
+from sklearn.svm import SVC
+\end_layout
+
+\begin_layout Plain Layout
+
+model = SVC( kernel='linear', C=1E10 )
+\end_layout
+
+\begin_layout Plain Layout
+
+model.fit(X,y)
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{lstlisting}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Entrenando el modelo SVM
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Para una mejor visualización, se agregara los limites de decisión del SVM,
+ se implementa una función 
+\begin_inset Quotes fld
+\end_inset
+
+plot_svc_decision_function
+\begin_inset Quotes frd
+\end_inset
+
+:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float algorithm
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{lstlisting}[language=Python,style=mystyle]
+\end_layout
+
+\begin_layout Plain Layout
+
+def plot_svc_decision_function(model, ax=None, plot_support=True):
+\end_layout
+
+\begin_layout Plain Layout
+
+    """Plot the decision function for a 2D SVC"""
+\end_layout
+
+\begin_layout Plain Layout
+
+    if ax is None:
+\end_layout
+
+\begin_layout Plain Layout
+
+        ax = plt.gca()
+\end_layout
+
+\begin_layout Plain Layout
+
+    xlim = ax.get_xlim()
+\end_layout
+
+\begin_layout Plain Layout
+
+    ylim = ax.get_ylim()
+\end_layout
+
+\begin_layout Plain Layout
+
+    # create grid to evaluate model
+\end_layout
+
+\begin_layout Plain Layout
+
+    x = np.linspace(xlim[0], xlim[1], 30)
+\end_layout
+
+\begin_layout Plain Layout
+
+    y = np.linspace(ylim[0], ylim[1], 30)
+\end_layout
+
+\begin_layout Plain Layout
+
+    Y, X = np.meshgrid(y, x)
+\end_layout
+
+\begin_layout Plain Layout
+
+    xy = np.vstack([X.ravel(), Y.ravel()]).T
+\end_layout
+
+\begin_layout Plain Layout
+
+    P = model.decision_function(xy).reshape(X.shape)
+\end_layout
+
+\begin_layout Plain Layout
+
+    # plot decision boundary and margins
+\end_layout
+
+\begin_layout Plain Layout
+
+    ax.contour(X, Y, P, colors='k',
+\end_layout
+
+\begin_layout Plain Layout
+
+               levels=[-1, 0, 1], alpha=0.5,
+\end_layout
+
+\begin_layout Plain Layout
+
+               linestyles=['--', '-', '--'])
+\end_layout
+
+\begin_layout Plain Layout
+
+    # plot support vectors
+\end_layout
+
+\begin_layout Plain Layout
+
+    if plot_support:
+\end_layout
+
+\begin_layout Plain Layout
+
+        ax.scatter(model.support_vectors_[:, 0],                    				 
+ 					model.support_vectors_[:, 1],
+\end_layout
+
+\begin_layout Plain Layout
+
+                   s=300, linewidth=1, facecolors='none');
+\end_layout
+
+\begin_layout Plain Layout
+
+    ax.set_xlim(xlim)
+\end_layout
+
+\begin_layout Plain Layout
+
+    ax.set_ylim(ylim)
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{lstlisting}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Implementación 
+\begin_inset Quotes fld
+\end_inset
+
+plot_svc_decision_function
+\begin_inset Quotes frd
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Con tan solo dos líneas de código ahora podremos visualizar nuestros resultados:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float algorithm
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{lstlisting}[language=Python,style=mystyle]
+\end_layout
+
+\begin_layout Plain Layout
+
+plt.scatter(X[:, 0], X[:, 1], c=y, s=50, cmap='autumn')
+\end_layout
+
+\begin_layout Plain Layout
+
+plot_svc_decision_function(model);
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{lstlisting}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Visualización del modelo SVM
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Los gráficos son los siguientes:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename FitModelSVM.png
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Limites del modelo SVM entrenado.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+La validación del modelo se realizar con 60 y 120 puntos nuevos generados
+ de forma aleatoria, todo esto definido en una función 
+\begin_inset Quotes fld
+\end_inset
+
+plot_svm
+\begin_inset Quotes frd
+\end_inset
+
+:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float algorithm
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{lstlisting}[language=Python,style=mystyle]
+\end_layout
+
+\begin_layout Plain Layout
+
+def plot_svm(N=10, ax=None):
+\end_layout
+
+\begin_layout Plain Layout
+
+    X, y = make_blobs(n_samples=200, centers=2,
+\end_layout
+
+\begin_layout Plain Layout
+
+                      random_state=0, cluster_std=0.60)
+\end_layout
+
+\begin_layout Plain Layout
+
+    X = X[:N]
+\end_layout
+
+\begin_layout Plain Layout
+
+    y = y[:N]
+\end_layout
+
+\begin_layout Plain Layout
+
+    model = SVC(kernel='linear', C=1E10)
+\end_layout
+
+\begin_layout Plain Layout
+
+    model.fit(X, y)
+\end_layout
+
+\begin_layout Plain Layout
+
+    ax = ax or plt.gca()
+\end_layout
+
+\begin_layout Plain Layout
+
+    ax.scatter(X[:, 0], X[:, 1], c=y, s=50, cmap='autumn')
+\end_layout
+
+\begin_layout Plain Layout
+
+    ax.set_xlim(-1, 4)
+\end_layout
+
+\begin_layout Plain Layout
+
+    ax.set_ylim(-1, 6)
+\end_layout
+
+\begin_layout Plain Layout
+
+    plot_svc_decision_function(model, ax)
+\end_layout
+
+\begin_layout Plain Layout
+
+fig, ax = plt.subplots(1, 2, figsize=(16, 6))
+\end_layout
+
+\begin_layout Plain Layout
+
+fig.subplots_adjust(left=0.0625, right=0.95, wspace=0.1)
+\end_layout
+
+\begin_layout Plain Layout
+
+for axi, N in zip(ax, [60, 120]):
+\end_layout
+
+\begin_layout Plain Layout
+
+    plot_svm(N, axi)
+\end_layout
+
+\begin_layout Plain Layout
+
+    axi.set_title('N = {0}'.format(N))
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{lstlisting}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Validación del model SVM
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+En los gráficos motrados se observa que el modelo SVM clasifica de forma
+ muy aceptable los datos de validación generados.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename ValidationModelSVM.png
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Validación del modelo SVM
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Plain Layout
 
 \end_layout
 
 \end_inset
 
+
+\end_layout
+
+\begin_layout Section
+Clasificador Kernel-SVM
+\end_layout
+
+\begin_layout Standard
 
 \end_layout
 
@@ -2953,6 +3484,7 @@ sideways false
 status open
 
 \begin_layout Plain Layout
+\align center
 \begin_inset Graphics
 	filename GMM.png
 	scale 40
