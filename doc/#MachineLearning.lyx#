@@ -1803,8 +1803,12 @@ def plot_svc_decision_function(model, ax=None, plot_support=True):
 
 \begin_layout Plain Layout
 
-        ax.scatter(model.support_vectors_[:, 0],                    				 
- 					model.support_vectors_[:, 1],
+        ax.scatter(model.support_vectors_[:, 0],
+\end_layout
+
+\begin_layout Plain Layout
+
+                   model.support_vectors_[:, 1],
 \end_layout
 
 \begin_layout Plain Layout
@@ -1927,12 +1931,13 @@ Los gráficos son los siguientes:
 \begin_inset Float figure
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \align center
 \begin_inset Graphics
 	filename FitModelSVM.png
+	scale 80
 
 \end_inset
 
@@ -2115,6 +2120,7 @@ status open
 \align center
 \begin_inset Graphics
 	filename ValidationModelSVM.png
+	scale 60
 
 \end_inset
 
@@ -2183,6 +2189,30 @@ from sklearn.datasets.samples_generator import make_circles
 
 \begin_layout Plain Layout
 
+from sklearn.svm import SVC
+\end_layout
+
+\begin_layout Plain Layout
+
+import numpy as np
+\end_layout
+
+\begin_layout Plain Layout
+
+import pandas as pd
+\end_layout
+
+\begin_layout Plain Layout
+
+import matplotlib.pyplot as plt
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
 X, y = make_circles(100, factor=.1, noise=.1)
 \end_layout
 
@@ -2192,7 +2222,7 @@ X, y = make_circles(100, factor=.1, noise=.1)
 
 \begin_layout Plain Layout
 
-clf = SVC(kernel='lineal').fit(X,y)
+clf = SVC(kernel='linear').fit(X,y)
 \end_layout
 
 \begin_layout Plain Layout
@@ -2230,6 +2260,681 @@ Entrenando un modelo Kernel-SVM
 
 \end_inset
 
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Tal como se observa en la visualización los datos no son linealmente separables.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename FitModelSVMwithLinealKernel.png
+	scale 80
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Clasificación de datos usando un 
+\begin_inset Quotes fld
+\end_inset
+
+Kernel Lineal
+\begin_inset Quotes frd
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Agregando una dimensión adicional a los datos, clasificarlos se combierte
+ en un problema lineal, para ello aplicaremos la transformación 
+\begin_inset Formula $r=f\left(x\right)$
+\end_inset
+
+ definida como:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+r=e^{-x^{2}+1}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Después de aplicar la transformación y agregar la nueva coordenada, vamos
+ dibujar usando 3 dimensiones
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float algorithm
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{lstlisting}[language=Python,style=mystyle]
+\end_layout
+
+\begin_layout Plain Layout
+
+from ipywidgets import interact, fixed
+\end_layout
+
+\begin_layout Plain Layout
+
+from mpl_toolkits import mplot3d
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+def plot_3D(X, y, z, elev=None, azim=None):
+\end_layout
+
+\begin_layout Plain Layout
+
+    ax = plt.subplot(projection='3d')
+\end_layout
+
+\begin_layout Plain Layout
+
+    ax.scatter3D( X[:,0], X[:,1], z, c=y, s=50, cmap='autumn')
+\end_layout
+
+\begin_layout Plain Layout
+
+    ax.view_init(elev=elev, azim=azim)
+\end_layout
+
+\begin_layout Plain Layout
+
+    ax.set_xlabel('x')
+\end_layout
+
+\begin_layout Plain Layout
+
+    ax.set_ylabel('y')
+\end_layout
+
+\begin_layout Plain Layout
+
+    ax.set_zlabel('z')
+\end_layout
+
+\begin_layout Plain Layout
+
+    plt.show()
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+r = np.exp(-(X ** 2).sum(1))
+\end_layout
+
+\begin_layout Plain Layout
+
+plot_3D( X, y, r)
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{lstlisting}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Conversion de datos 2D a 3D.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+La gráfica generada se muestra a continuación:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename 2Dto3DKernel-SVM.png
+	scale 80
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Visualización de los datos usando Kernel-SVM
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+En esta estrategia, es computacionalmente costoso, ya que X tiene la forma
+ 
+\begin_inset Formula $n\times n$
+\end_inset
+
+.
+ Sin embargo, con un truco en el núcleo, es posible hacer un ajuste de los
+ datos transformados por el núcleo de forma implícita, es decir, ¡sin countruir
+ nunca l arepresentación N-dimensional completa de la proyección del núcleo!.
+ Este truco esta integrado en el núcleo de SVM y es una de las razones por
+ las que es poderoso.
+\end_layout
+
+\begin_layout Standard
+En Scikit-Learn, podemos usar el 
+\begin_inset Quotes fld
+\end_inset
+
+kernel-SVM
+\begin_inset Quotes frd
+\end_inset
+
+ cambiando de 
+\begin_inset Quotes fld
+\end_inset
+
+linear
+\begin_inset Quotes frd
+\end_inset
+
+ a 
+\begin_inset Quotes fld
+\end_inset
+
+rbf
+\begin_inset Quotes frd
+\end_inset
+
+ (radial basis function):
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float algorithm
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{lstlisting}[language=Python,style=mystyle]
+\end_layout
+
+\begin_layout Plain Layout
+
+# Using a kernel Radial Basis Function
+\end_layout
+
+\begin_layout Plain Layout
+
+clf = SVC(kernel='rbf', C=1E6)
+\end_layout
+
+\begin_layout Plain Layout
+
+clf.fit(X,y)
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+plt.scatter(X[:,0], X[:,1], c=y, s=50, cmap='autumn')
+\end_layout
+
+\begin_layout Plain Layout
+
+plot_svc_decision_function(clf)
+\end_layout
+
+\begin_layout Plain Layout
+
+plt.scatter(clf.support_vectors_[:,0], clf.support_vectors_[:,1],
+\end_layout
+
+\begin_layout Plain Layout
+
+            s=300, lw=1, facecolors='none')
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{lstlisting}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Usando 
+\begin_inset Quotes fld
+\end_inset
+
+Radial Basis Fuction
+\begin_inset Quotes frd
+\end_inset
+
+ Kernel-SVM 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Usando el 
+\begin_inset Quotes fld
+\end_inset
+
+Kernel-SVM
+\begin_inset Quotes frd
+\end_inset
+
+, podemos transformar datos en el mismo interior de los algoritmos para
+ ejecutar metodos no lineales de forma más rápido, especialmente para modelos
+ en los que se puede aplicar este 
+\begin_inset Quotes fld
+\end_inset
+
+truco
+\begin_inset Quotes frd
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename FitmodelRDFKernel-SVM.png
+	scale 80
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Clasificación de datos usando 
+\begin_inset Quotes fld
+\end_inset
+
+Kernel RDF-SVM
+\begin_inset Quotes frd
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Clasificador SVM con margenes suavizados
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float algorithm
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{lstlisting}[language=Python,style=mystyle]
+\end_layout
+
+\begin_layout Plain Layout
+
+X, y = make_blobs(n_samples=100, centers=2,
+\end_layout
+
+\begin_layout Plain Layout
+
+                  random_state=0, cluster_std=1.2)
+\end_layout
+
+\begin_layout Plain Layout
+
+plt.scatter(X[:,0], X[:,1], c=y, s=50, cmap='autumn')
+\end_layout
+
+\begin_layout Plain Layout
+
+plt.show()
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{lstlisting}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Datos solapados
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Tal como se observa a continuación los datos se solapan, esto podría hacer
+ la clasificación más dificil.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename DataSolapada.png
+	scale 80
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Visualización de datos solapados
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Para manejar este tipo de casos, la implementación de SVM tiene un 
+\begin_inset Quotes fld
+\end_inset
+
+fudge-factor
+\begin_inset Quotes frd
+\end_inset
+
+ que suavisa los margenes, la dureza de los margenes es ajustado por un
+ parámetro C.
+ Para un 
+\begin_inset Quotes fld
+\end_inset
+
+C
+\begin_inset Quotes frd
+\end_inset
+
+ muy grande, el margen es duro, y los puntos no pueden estar en él.
+ Para un 
+\begin_inset Quotes fld
+\end_inset
+
+C
+\begin_inset Quotes frd
+\end_inset
+
+ más pequeño el margen es más suave y puede crecer hasta abarcar algunos
+ puntos.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float algorithm
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{lstlisting}[language=Python,style=mystyle]
+\end_layout
+
+\begin_layout Plain Layout
+
+X, y = make_blobs(n_samples=100, centers=2,
+\end_layout
+
+\begin_layout Plain Layout
+
+                  random_state=0, cluster_std=0.8)
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+fig, ax = plt.subplots(1, 2, figsize=(16,6))
+\end_layout
+
+\begin_layout Plain Layout
+
+fig.subplots_adjust(left=0.0625, right=0.95, wspace=0.1)
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+for axi, C in zip(ax, [10.0, 0.1]):
+\end_layout
+
+\begin_layout Plain Layout
+
+    model = SVC(kernel='linear', C=C).fit(X,y)
+\end_layout
+
+\begin_layout Plain Layout
+
+    axi.scatter(X[:,0], X[:,1], c=y, s=50, cmap='autumn')
+\end_layout
+
+\begin_layout Plain Layout
+
+    plot_svc_decision_function(model,axi)
+\end_layout
+
+\begin_layout Plain Layout
+
+    axi.scatter(model.support_vectors_[:,0],
+\end_layout
+
+\begin_layout Plain Layout
+
+                
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{lstlisting}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+hk
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
 
 \end_layout
 
