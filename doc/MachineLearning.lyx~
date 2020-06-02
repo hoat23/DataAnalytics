@@ -2927,11 +2927,11 @@ for axi, C in zip(ax, [10.0, 0.1]):
 
 \begin_layout Plain Layout
 
-    plt.show()
 \end_layout
 
 \begin_layout Plain Layout
 
+plt.show()
 \end_layout
 
 \begin_layout Plain Layout
@@ -2990,9 +2990,10 @@ sideways false
 status open
 
 \begin_layout Plain Layout
+\align center
 \begin_inset Graphics
 	filename FitModelSVM-Softening.png
-	scale 80
+	scale 50
 
 \end_inset
 
@@ -3013,6 +3014,854 @@ SVC con margenes suavizados (C=10.0 & C=0.1).
 
 \begin_layout Plain Layout
 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Face Recognition usando SVM
+\end_layout
+
+\begin_layout Standard
+Usaremos rostros previamente clasificados, el cual consiste en miles de
+ fotos de varias figuras públicas.
+ Un buscador para estos datos esta integrada en Scikit-Learn:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float algorithm
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{lstlisting}[language=Python,style=mystyle]
+\end_layout
+
+\begin_layout Plain Layout
+
+import matplotlib.pyplot as plt
+\end_layout
+
+\begin_layout Plain Layout
+
+from sklearn.datasets import fetchs_lfw_people
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+faces = fetch_lfw_people(min_faces_per_person=60)
+\end_layout
+
+\begin_layout Plain Layout
+
+print(faces.target_names)
+\end_layout
+
+\begin_layout Plain Layout
+
+print(faces.images.shape)
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{lstlisting}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Fotos de rostros clasificados.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Esta base de datos cargada consta de rostros de personajes como: 
+\begin_inset Quotes fld
+\end_inset
+
+Ariel Sharon
+\begin_inset Quotes frd
+\end_inset
+
+, 
+\begin_inset Quotes fld
+\end_inset
+
+Colin Powell
+\begin_inset Quotes frd
+\end_inset
+
+, 
+\begin_inset Quotes fld
+\end_inset
+
+Donald Rumsfeld
+\begin_inset Quotes frd
+\end_inset
+
+, 
+\begin_inset Quotes fld
+\end_inset
+
+George W Bush
+\begin_inset Quotes frd
+\end_inset
+
+, 
+\begin_inset Quotes fld
+\end_inset
+
+Gerald Schoroeder
+\begin_inset Quotes frd
+\end_inset
+
+, 
+\begin_inset Quotes fld
+\end_inset
+
+Hugo Chavez
+\begin_inset Quotes frd
+\end_inset
+
+, 
+\begin_inset Quotes fld
+\end_inset
+
+Junichiro Koizumi
+\begin_inset Quotes frd
+\end_inset
+
+ y 
+\begin_inset Quotes fld
+\end_inset
+
+Tony Blair
+\begin_inset Quotes frd
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+El tamaño de este dataset consta de 1348 muestras con imagenes de 
+\begin_inset Quotes fld
+\end_inset
+
+62x47
+\begin_inset Quotes frd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+A continuación se mostrará algunas imagenes de los rostros del dataset cargado.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float algorithm
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{lstlisting}[language=Python,style=mystyle]
+\end_layout
+
+\begin_layout Plain Layout
+
+fig, ax = plt.subplots(3,5)
+\end_layout
+
+\begin_layout Plain Layout
+
+for i, axi in enumerate(ax.flat):
+\end_layout
+
+\begin_layout Plain Layout
+
+    axi.imshow(faces.images[i], cmap='bone')
+\end_layout
+
+\begin_layout Plain Layout
+
+    axi.set(xticks=[], yticks=[],
+\end_layout
+
+\begin_layout Plain Layout
+
+            xlabel=faces.target_names[faces.target[i]])
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{lstlisting}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Mostrando algunos rostros
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename DataSetFaces.png
+	scale 80
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Algunos rostros del dataset.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Cada imagen contiene [62x47] cerca de 3000 Pixeles.
+ Podríamos considerar cada valor del pixel como una característica pero
+ a menudo es más efectivo usar algun preprocesador para extraer las característi
+cas más significativas, aquí usaremos el 
+\begin_inset Quotes fld
+\end_inset
+
+Análisis de Componentes Principales
+\begin_inset Quotes frd
+\end_inset
+
+ para extraer 150 componentes principales e introducirlas al clasificador
+ SVM.
+ Podemos hacer esto de manera directa empaquetando el procesador y clasificador
+ en un único 
+\begin_inset Quotes fld
+\end_inset
+
+pipeline
+\begin_inset Quotes frd
+\end_inset
+
+:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float algorithm
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{lstlisting}[language=Python,style=mystyle]
+\end_layout
+
+\begin_layout Plain Layout
+
+from sklearn.svm import SVC
+\end_layout
+
+\begin_layout Plain Layout
+
+from sklearn.decomposition import PCA as RandomizedPCA
+\end_layout
+
+\begin_layout Plain Layout
+
+from sklearn.pipeline import make_pipeline
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+pca = RandomizedPCA(n_components=150, whiten=True, random_state=42)
+\end_layout
+
+\begin_layout Plain Layout
+
+svc = SVC(kernel='rbf', class_weight='balanced')
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+model = make_pipeline(pca,svc)
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{lstlisting}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Empaquetando PCA y SVM en un pipeline
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Para validar nuestro modelo, dividiremos los datos en 2 conjuntos: 
+\begin_inset Quotes fld
+\end_inset
+
+entrenamiento
+\begin_inset Quotes frd
+\end_inset
+
+ y 
+\begin_inset Quotes fld
+\end_inset
+
+prueba
+\begin_inset Quotes frd
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float algorithm
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{lstlisting}[language=Python,style=mystyle]
+\end_layout
+
+\begin_layout Plain Layout
+
+#Deprecated: cross_validation by model_selection
+\end_layout
+
+\begin_layout Plain Layout
+
+from sklearn.cross_validation import train_test_split
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+Xtrain, Xtest, ytrain, ytest = train_test_split(faces.data,
+\end_layout
+
+\begin_layout Plain Layout
+
+                                                faces.target,
+\end_layout
+
+\begin_layout Plain Layout
+
+                                                random_state=42)
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{lstlisting}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Creando los conjuntos de datos 
+\begin_inset Quotes fld
+\end_inset
+
+entrenamiento
+\begin_inset Quotes frd
+\end_inset
+
+ y 
+\begin_inset Quotes fld
+\end_inset
+
+prueba
+\begin_inset Quotes frd
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Finalmente usaremos un 
+\begin_inset Quotes fld
+\end_inset
+
+grid search cross-validation
+\begin_inset Quotes frd
+\end_inset
+
+ para explorar las combinaciones de parametros.
+ Aqui ajustaremos 
+\begin_inset Quotes fld
+\end_inset
+
+C
+\begin_inset Quotes frd
+\end_inset
+
+ (controlar la dureza de los margenes) y 
+\begin_inset Quotes fld
+\end_inset
+
+gamma
+\begin_inset Quotes frd
+\end_inset
+
+ (controlar el tamaño del núcleo de la funcion de base radial)
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float algorithm
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{lstlisting}[language=Python,style=mystyle]
+\end_layout
+
+\begin_layout Plain Layout
+
+from sklearn.model_selection import GridSearchCV
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+param_grid = { 'svc__C'     : [    1,     5,   10,   50],
+\end_layout
+
+\begin_layout Plain Layout
+
+               'svc__gamma' : [.0001, .0005, .001, .005]}
+\end_layout
+
+\begin_layout Plain Layout
+
+grid = GridSearchCV(model, param_grid)
+\end_layout
+
+\begin_layout Plain Layout
+
+grid.fit(Xtrain, ytrain)
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+print(grid.best_params_)
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{lstlisting}
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Training model using grid search cross-validation
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Los mejores valores encontrados para los parametros son : 
+\begin_inset Formula ${'\text{svc\_\_c}':10,'\text{svc\_\_gamma}':0.001}$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+Ahora usaremos este model para predecir valores con los datos de prueba.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float algorithm
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{lstlisting}[language=Python,style=mystyle]
+\end_layout
+
+\begin_layout Plain Layout
+
+model = grid.best_estimator_
+\end_layout
+
+\begin_layout Plain Layout
+
+yfit = model.predict(Xtest)
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{lstlisting}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Validando el modelo 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Podemos obtener una mejor visión de nuestro clasificador generando un reporte,
+ tal como se muestra a continuación:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float algorithm
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{lstlisting}[language=Python,style=mystyle]
+\end_layout
+
+\begin_layout Plain Layout
+
+from sklearn.metrics import classification_report
+\end_layout
+
+\begin_layout Plain Layout
+
+print(classification_report(ytest, yfit,
+\end_layout
+
+\begin_layout Plain Layout
+
+                            target_names=faces.target_names))
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{lstlisting}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Reporte de clasificación
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Según se observa en el reporte, podemos 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename FitModelReport-PCA-SVM.png
+	scale 80
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Reporte de clasificación del modelo 
+\begin_inset Quotes fld
+\end_inset
+
+PCA-SVM
+\begin_inset Quotes frd
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Note Comment
+status open
+
+\begin_layout Plain Layout
+Este metodo es muy poderoso para clasificar por las siguientes razones:
+\end_layout
+
+\begin_layout Itemize
+Una vez el modelo fue entrenado, la fase de la predición es rápida.
+\end_layout
+
+\begin_layout Itemize
+Debido a que solo se ven afectados por puntos cercanos al margen, estos
+ trabajan bien con datos hiperdimensionales, incluso con datos que tienes
+ más dimensiones que muestras, que muchas veces es un reto para otros algoritmos.
+\end_layout
+
+\begin_layout Itemize
+Su integración con 
+\begin_inset Quotes fld
+\end_inset
+
+kernels
+\begin_inset Quotes frd
+\end_inset
+
+ hace que sea muy versatil y adaptable a muchos tipos de datos.
 \end_layout
 
 \end_inset
@@ -4435,7 +5284,12 @@ begin{lstlisting}[language=Python,style=mystyle]
 
 \begin_layout Plain Layout
 
-from sklearn.cross_validation import train_test_split
+#Deprecated: cross_validation by model_selection
+\end_layout
+
+\begin_layout Plain Layout
+
+from sklearn.model_selection import train_test_split
 \end_layout
 
 \begin_layout Plain Layout
