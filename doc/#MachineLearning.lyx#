@@ -3882,12 +3882,12 @@ sns.heatmap(mat.T, square=True, annot=True, fmt='d', cbar=False,
 
 \begin_layout Plain Layout
 
-            xtickslabels=faces.target_names,
+            xticklabels=faces.target_names,
 \end_layout
 
 \begin_layout Plain Layout
 
-            ytickslabels=faces.target_names)
+            yticklabels=faces.target_names)
 \end_layout
 
 \begin_layout Plain Layout
@@ -3938,7 +3938,47 @@ Matriz de Confusión
 \end_layout
 
 \begin_layout Standard
-Para este tipo de aplicacion
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename MatrixConfussionModelFitFaces.png
+	scale 80
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Matriz de confusión del clasificador de rostros.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Para este tipo de aplicaciones, es mejor usar OpenCV, que tiene implementado
+ modelos para extraer caracteristicas de las imagenes independiente de la
+ pixelación.
 \end_layout
 
 \begin_layout Standard
@@ -3969,6 +4009,57 @@ kernels
 \end_inset
 
  hace que sea muy versatil y adaptable a muchos tipos de datos.
+\end_layout
+
+\begin_layout Plain Layout
+Sin embargo SVM tiene desventajas:
+\end_layout
+
+\begin_layout Itemize
+Para muestras de volumen N es 
+\begin_inset Formula $O\left[N^{3}\right]$
+\end_inset
+
+ en el peor caso, o 
+\begin_inset Formula $O\left[N^{2}\right]$
+\end_inset
+
+ para implementaciones eficientes.
+ Para un gran número de muestras de entrenamiento, esto puede ser computacionalm
+ente prohibitivo.
+\end_layout
+
+\begin_layout Itemize
+Los resultados dependen grandemente de la elección adecuada del parametro
+ de suavizado 
+\begin_inset Quotes fld
+\end_inset
+
+C
+\begin_inset Quotes frd
+\end_inset
+
+.
+ Este debe elegirse cuidadosamente mediante validación cruzada, lo que puede
+ ser costoso a medida que los datos crecen en tamaño.
+\end_layout
+
+\begin_layout Itemize
+Los resultados no tienen una interpretación probabilística directa.
+ Esto se puede estimar a trav+es de una validación cruzada interna (ver
+ el parámetro de probabilidad SVC), pero esta estimación adicional es costosa.
+\end_layout
+
+\begin_layout Plain Layout
+Con estos rasgos en mente, únicamente se debe recurrir a SVM, después que
+ otros métodos más simples, más rápidos y menos intensivos de ajuste han
+ demostrado ser insuficientes.
+ Sin embargo, si tienes 
+\series bold
+ciclos de CPU
+\series default
+ para entrenamiento y la validación cruzada de una SVM, el metodo puede
+ generar excelentes resultados.
 \end_layout
 
 \end_inset
@@ -4857,7 +4948,7 @@ Nuestro modelo tiene un 97.36% de precisión, como se puede observar el algoritm
 \end_layout
 
 \begin_layout Section
-Ejemplo 03: Reducción de componentes usando PCA
+Reducción de componentes usando PCA
 \end_layout
 
 \begin_layout Standard
@@ -5115,7 +5206,7 @@ iris
 \end_layout
 
 \begin_layout Section
-Ejemplo 04: Clustering con Gaussian Mixture Model (GMM)
+Clustering con Gaussian Mixture Model (GMM)
 \end_layout
 
 \begin_layout Standard
@@ -5348,6 +5439,498 @@ cluster 0
 
 , vemos 5 puntos de color naranja que en comparación con lo demás en general
  es un pequeño error aceptable del modelo entrenado.
+\end_layout
+
+\begin_layout Section
+Árboles de Decisión y Bosques Aleatorios
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float algorithm
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{lstlisting}[language=Python,style=mystyle]
+\end_layout
+
+\begin_layout Plain Layout
+
+import numpy as np
+\end_layout
+
+\begin_layout Plain Layout
+
+import matplotlib.pyplot as plt
+\end_layout
+
+\begin_layout Plain Layout
+
+import seaborn as sns
+\end_layout
+
+\begin_layout Plain Layout
+
+from sklearn.datasets import make_blobs
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+sns.set()
+\end_layout
+
+\begin_layout Plain Layout
+
+X, y = make_blobs(n_samples=300,  centers=4,
+\end_layout
+
+\begin_layout Plain Layout
+
+                  random_state=0, cluster_std=1.0)
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+plt.scatter(X[:,0], X[:,1], c=y, s=50, cmap='rainbow')
+\end_layout
+
+\begin_layout Plain Layout
+
+plt.show()
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{lstlisting}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Datasets con 4 tipos.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float algorithm
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename DataSetRandomForest.png
+	scale 80
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Dataset para clasificar con 
+\begin_inset Quotes fld
+\end_inset
+
+Random Forest
+\begin_inset Quotes frd
+\end_inset
+
+ 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Un árbol simple de decisión interactúa con los datos dividiendolos usando
+ ejes, acorde a algún criterio cuantitativo 
+\begin_inset Quotes fld
+\end_inset
+
+depth
+\begin_inset Quotes frd
+\end_inset
+
+.
+ La figura acontinuación representa para los primeros cuatro niveles de
+ un árbol de clasificación:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Graphics
+	filename DecisionTreeLevels.png
+	scale 60
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Visualización para los diferentes niveles del árbol de decisión.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float algorithm
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{lstlisting}[language=Python,style=mystyle]
+\end_layout
+
+\begin_layout Plain Layout
+
+#from sklearn.datasets.samples_generator import make_circles 
+\end_layout
+
+\begin_layout Plain Layout
+
+#from sklearn.svm import SVC 
+\end_layout
+
+\begin_layout Plain Layout
+
+from sklearn.datasets.samples_generator import make_blobs 
+\end_layout
+
+\begin_layout Plain Layout
+
+from sklearn.tree import DecisionTreeClassifier 
+\end_layout
+
+\begin_layout Plain Layout
+
+from ipywidgets import interact 
+\end_layout
+
+\begin_layout Plain Layout
+
+import matplotlib.pyplot as plt 
+\end_layout
+
+\begin_layout Plain Layout
+
+import numpy as np 
+\end_layout
+
+\begin_layout Plain Layout
+
+import pandas as pd ############################################################
+############################ 
+\end_layout
+
+\begin_layout Plain Layout
+
+def visualize_tree(estimator, X, y, boundaries=True,
+\end_layout
+
+\begin_layout Plain Layout
+
+                   xlim=None, ylim=None, axi=None):
+\end_layout
+
+\begin_layout Plain Layout
+
+    ax = axi or plt.gca()
+\end_layout
+
+\begin_layout Plain Layout
+
+    # Plot the training points     
+\end_layout
+
+\begin_layout Plain Layout
+
+    ax.scatter(X[:, 0], X[:, 1], c=y, s=30, cmap='viridis',
+\end_layout
+
+\begin_layout Plain Layout
+
+               clim=(y.min(), y.max()), zorder=3)
+\end_layout
+
+\begin_layout Plain Layout
+
+    ax.axis('tight')
+\end_layout
+
+\begin_layout Plain Layout
+
+    ax.axis('off')
+\end_layout
+
+\begin_layout Plain Layout
+
+    if xlim is None:
+\end_layout
+
+\begin_layout Plain Layout
+
+        xlim = ax.get_xlim()
+\end_layout
+
+\begin_layout Plain Layout
+
+    if ylim is None:
+\end_layout
+
+\begin_layout Plain Layout
+
+        ylim = ax.get_ylim()
+\end_layout
+
+\begin_layout Plain Layout
+
+         # fit the estimator
+\end_layout
+
+\begin_layout Plain Layout
+
+    estimator.fit(X, y)
+\end_layout
+
+\begin_layout Plain Layout
+
+    xx, yy = np.meshgrid(np.linspace(*xlim, num=200),
+\end_layout
+
+\begin_layout Plain Layout
+
+                         np.linspace(*ylim, num=200))
+\end_layout
+
+\begin_layout Plain Layout
+
+    Z = estimator.predict(np.c_[xx.ravel(), yy.ravel()])
+\end_layout
+
+\begin_layout Plain Layout
+
+    # Put the result into a color plot
+\end_layout
+
+\begin_layout Plain Layout
+
+    n_classes = len(np.unique(y))
+\end_layout
+
+\begin_layout Plain Layout
+
+    Z = Z.reshape(xx.shape)
+\end_layout
+
+\begin_layout Plain Layout
+
+    contours = ax.contourf(xx, yy, Z, alpha=0.3,
+\end_layout
+
+\begin_layout Plain Layout
+
+                           levels=np.arange(n_classes + 1) - 0.5,
+\end_layout
+
+\begin_layout Plain Layout
+
+                           cmap='viridis', clim=(y.min(), y.max()),
+\end_layout
+
+\begin_layout Plain Layout
+
+                           zorder=1)
+\end_layout
+
+\begin_layout Plain Layout
+
+    ax.set(xlim=xlim, ylim=ylim)
+\end_layout
+
+\begin_layout Plain Layout
+
+    # Plot the decision boundaries
+\end_layout
+
+\begin_layout Plain Layout
+
+    def plot_boundaries(i, xlim, ylim):
+\end_layout
+
+\begin_layout Plain Layout
+
+        if i >= 0:
+\end_layout
+
+\begin_layout Plain Layout
+
+            tree = estimator.tree_
+\end_layout
+
+\begin_layout Plain Layout
+
+                     if tree.feature[i] == 0:
+\end_layout
+
+\begin_layout Plain Layout
+
+                ax.plot([tree.threshold[i], tree.threshold[i]], ylim, '-k',
+ zorder=2)
+\end_layout
+
+\begin_layout Plain Layout
+
+                plot_boundaries(tree.children_left[i],                  
+               [xlim[0], tree.threshold[i]], ylim)                 plot_boundarie
+s(tree.children_right[i],                                 [tree.threshold[i],
+ xlim[1]], ylim)                      elif tree.feature[i] == 1:        
+         ax.plot(xlim, [tree.threshold[i], tree.threshold[i]], '-k', zorder=2)
+                 plot_boundaries(tree.children_left[i], xlim,           
+                      [ylim[0], tree.threshold[i]])                 plot_boundari
+es(tree.children_right[i], xlim,                                 [tree.threshold[i
+], ylim[1]])                  if boundaries:         plot_boundaries(0,
+ xlim, ylim) ###################################################################
+##################### def plot_tree_interactive(X, y):     def interactive_tree(
+depth=5):         clf = DecisionTreeClassifier(max_depth=depth, random_state=0)
+         visualize_tree(clf, X, y)     #return interact(interactive_tree,
+ depth=[1,5])     return interactive_tree(depth=[1,5]) #########################
+############################################################### def randomized_t
+ree_interactive(X, y):     N = int(0.75 * X.shape[0])          xlim = (X[:,
+ 0].min(), X[:, 0].max())     ylim = (X[:, 1].min(), X[:, 1].max())        
+  def fit_randomized_tree(random_state=0):         clf = DecisionTreeClassifier(
+max_depth=15)         i = np.arange(len(y))         rng = np.random.RandomState(ran
+dom_state)         rng.shuffle(i)         visualize_tree(clf, X[i[:N]], y[i[:N]],
+ boundaries=False,                        xlim=xlim, ylim=ylim)        
+  interact(fit_randomized_tree, random_state=[0, 100]); ########################
+################################################################ # Creating
+ dataset X, y = make_blobs(n_samples=300, centers=4,                   random_st
+ate=0, cluster_std=1.0)
+\end_layout
+
+\begin_layout Plain Layout
+
+# Creating subplots 1x4 fig, ax = plt.subplots( 1, 4, figsize=(16,3) ) fig.subplot
+s_adjust(left=0.02, right=0.98, wspace=0.1)
+\end_layout
+
+\begin_layout Plain Layout
+
+# Fiting and plotting for axi, depth in zip(ax, range(1,5)):     model =
+ DecisionTreeClassifier(max_depth=depth)     visualize_tree(model, X, y,
+ axi=axi)     axi.set_title('depth = {0}'.format(depth))
+\end_layout
+
+\begin_layout Plain Layout
+
+# Show figure: Decision-tree-levels plt.show() 
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{lstlisting}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Tree-
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Part
