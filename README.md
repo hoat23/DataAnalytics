@@ -1,1 +1,1 @@
-# BasicDataAnalitics
+# Data Analytics
