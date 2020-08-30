@@ -46,6 +46,15 @@
 \rfoot{\thepage} % texto derecha del pie
 \renewcommand{\headrulewidth}{0.4pt} % grosor de la línea de la cabecera
 \renewcommand{\footrulewidth}{0.4pt} % grosor de la línea del pie
+
+%************Configuración para MatLab****************************************************
+\usepackage{alltt}
+\usepackage{color}
+%\usepackage{fullpage}		%Bota errores con la cabecera
+\definecolor{string}{rgb}{0.7,0.0,0.0}
+\definecolor{comment}{rgb}{0.13,0.54,0.13}
+\definecolor{keyword}{rgb}{0.0,0.0,1.0}
+%***********Fin Configuración MatLab******************************************************
 \end_preamble
 \use_default_options true
 \maintain_unincluded_children false
@@ -138,6 +147,1154 @@
 \begin_body
 
 \begin_layout Title
+Machine Learning
+\end_layout
+
+\begin_layout Part
+Estadística
+\end_layout
+
+\begin_layout Section
+
+\lang spanish
+Tratamiento de datos
+\end_layout
+
+\begin_layout Subsection
+
+\lang spanish
+Escalamiento
+\end_layout
+
+\begin_layout Standard
+
+\lang spanish
+Muchas veces los datos vienen en rangos fuera de 
+\begin_inset Formula $\left[0,1\right]$
+\end_inset
+
+ por tal motivo es necesario hacer un escalamiento antes de ingresar los
+ datos a la red neuronal.
+ Para realizar esto, se utiliza la siguiente ecuación:
+\end_layout
+
+\begin_layout Standard
+
+\lang spanish
+\begin_inset Formula 
+\[
+\frac{x_{0i}-x_{0min}}{x_{0max}-x_{0min}}=\frac{x_{i}-x_{min}}{x_{max}-x_{min}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\lang spanish
+\begin_inset Formula 
+\[
+\boxed{x_{0i}=\left(\frac{x_{0max}-x_{0min}}{x_{max}-x_{min}}\right)\cdot\left(x_{i}-x_{min}\right)+x_{0min}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+
+\lang spanish
+Donde para nuestro caso 
+\begin_inset Formula $\left[x_{0min},x_{0max}\right]=\left[0,1\right]$
+\end_inset
+
+ , por lo tanto la ecuación queda como:
+\end_layout
+
+\begin_layout Standard
+
+\lang spanish
+\begin_inset Formula 
+\[
+x_{0i}=\left(\frac{1}{x_{max}-x_{min}}\right)\cdot\left(x_{i}-x_{min}\right)+0
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\lang spanish
+\begin_inset Formula 
+\[
+\boxed{x_{0i}=\frac{x_{i}-x_{min}}{x_{max}-x_{min}}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\lang spanish
+Una vez que la red neuronal no ha arrojado un resultado, hay que regresar
+ dichos datos al rango original, para ello simplemente hay que despejar
+ 
+\begin_inset Formula $x_{i}$
+\end_inset
+
+ en ves de 
+\begin_inset Formula $x_{0i}$
+\end_inset
+
+, quedando la ecuación como:
+\end_layout
+
+\begin_layout Standard
+
+\lang spanish
+\begin_inset Formula 
+\[
+\boxed{x_{i}=\left(\frac{x_{max}-x_{min}}{x_{0max}-x_{0min}}\right)\cdot\left(x_{0i}-x_{0min}\right)+x_{min}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+
+\lang spanish
+Donde para nuestro caso 
+\begin_inset Formula $\left[x_{0min},x_{0max}\right]=\left[0,1\right]$
+\end_inset
+
+, tenemos:
+\end_layout
+
+\begin_layout Standard
+
+\lang spanish
+\begin_inset Formula 
+\[
+\boxed{x_{i}=\frac{x_{0i}-x_{0min}}{x_{0max}-x_{0min}}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+
+\lang spanish
+Matriz de datos
+\end_layout
+
+\begin_layout Standard
+
+\lang spanish
+Supongamos que sobre los individuos 
+\begin_inset Formula $w_{1},...,w_{n}$
+\end_inset
+
+ se han observado las variables 
+\begin_inset Formula $X_{1},...,X_{p}$
+\end_inset
+
+.
+ Sea 
+\begin_inset Formula $x_{ij}=X_{j}\left(w_{i}\right)$
+\end_inset
+
+la observación de la variable 
+\begin_inset Formula $X_{j}$
+\end_inset
+
+ sobre el individuo 
+\begin_inset Formula $w_{j}$
+\end_inset
+
+.
+ La matriz de datos multivariable es:
+\end_layout
+
+\begin_layout Standard
+
+\lang spanish
+\begin_inset Formula 
+\[
+\mathbf{X}=\begin{bmatrix}x_{11} & \cdots & x_{1j} & \cdots & x_{1p}\\
+\vdots & \ddots & \vdots & \ddots & \vdots\\
+x_{i1} & \cdots & x_{ij} & \cdots & x_{ip}\\
+\vdots & \ddots & \vdots & \ddots & \vdots\\
+x_{n1} & \cdots & x_{nj} & \cdots & x_{np}
+\end{bmatrix}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\lang spanish
+Las filas de 
+\begin_inset Formula $\mathbf{X}$
+\end_inset
+
+se identifican con los individuos y las columnas de 
+\series bold
+
+\begin_inset Formula $\mathbf{X}$
+\end_inset
+
+ 
+\series default
+con las variables indicaremos:
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\lang spanish
+\begin_inset Formula $x_{i}$
+\end_inset
+
+ 
+\series default
+la fila i-ésima de 
+\begin_inset Formula $\mathbf{X}$
+\end_inset
+
+, que operaremos como un vestor columna.
+\end_layout
+
+\begin_layout Itemize
+
+\lang spanish
+\begin_inset Formula $X_{j}$
+\end_inset
+
+ la columna j-ésima de 
+\begin_inset Formula $\mathbf{X}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsection
+
+\lang spanish
+Variables compuestas
+\end_layout
+
+\begin_layout Standard
+
+\lang spanish
+Algunos métodos de Analisis Multivariable (AM), consisten en obtener e interpret
+ar combinaciones lineales adecuadas de las variables observables.
+ Una variable compuesta Y es una combinación lineal de las variables observables
+ con coeficientes 
+\begin_inset Formula $\mathbf{a}=\left[a_{1},...,a_{p}\right]'$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\lang spanish
+\begin_inset Formula 
+\[
+Y=a_{1}\cdot X_{1}+...+a_{p}\cdot X_{p}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\lang spanish
+Si 
+\begin_inset Formula $\mathbf{X}=\left[X_{1},...,X_{p}\right]$
+\end_inset
+
+ es la matriz de datos, también podemos escribir
+\end_layout
+
+\begin_layout Standard
+
+\lang spanish
+\begin_inset Formula 
+\[
+Y=\mathbf{X}\cdot\mathbf{a}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\lang spanish
+Si 
+\begin_inset Formula $\mathbf{Z}=b_{1}\cdot X_{1}+...+b_{p}\cdot X_{p}=\mathbf{X}\cdot b$
+\end_inset
+
+ es otra variable compuesta, se verifica:
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\lang spanish
+\begin_inset Formula $\bar{Y}=\mathbf{\bar{x}'\cdot a}$
+\end_inset
+
+ , 
+\begin_inset Formula $\bar{Z}=\mathbf{\bar{x}'}\cdot\mathbf{b}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+
+\lang spanish
+\begin_inset Formula $var(Y)=\mathbf{a'}\cdot\mathbf{S}\cdot\mathbf{a}$
+\end_inset
+
+, 
+\series bold
+
+\begin_inset Formula $var\left(Z\right)=\mathbf{b'}\cdot\mathbf{S}\cdot\mathbf{b}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+
+\series bold
+\lang spanish
+\begin_inset Formula $cov\left(Y,Z\right)=\mathbf{a'}\cdot\mathbf{S}\cdot\mathbf{b}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+
+\lang spanish
+Matriz de Centrado 
+\begin_inset Formula $"H"$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\lang spanish
+Definida por:
+\end_layout
+
+\begin_layout Standard
+
+\lang spanish
+\begin_inset Formula 
+\[
+\boxed{H=I-\frac{1}{n}\cdot\bar{1}_{n\times n}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\lang spanish
+Donde:
+\end_layout
+
+\begin_layout Itemize
+
+\lang spanish
+\begin_inset Formula $I$
+\end_inset
+
+ : Matriz identidad nxn
+\end_layout
+
+\begin_layout Itemize
+
+\lang spanish
+\begin_inset Formula $\bar{1}_{n\times n}$
+\end_inset
+
+: ;Matriz de unos de dimensión nxn
+\end_layout
+
+\begin_layout Standard
+
+\lang spanish
+Se usa para centrar configuración es datos:
+\end_layout
+
+\begin_layout Standard
+
+\lang spanish
+Sea 
+\begin_inset Quotes cld
+\end_inset
+
+X
+\begin_inset Quotes crd
+\end_inset
+
+ una matriz de datos, de dimensión 
+\begin_inset Quotes cld
+\end_inset
+
+nxp
+\begin_inset Quotes crd
+\end_inset
+
+ entonces 
+\begin_inset Formula $"H\times X"$
+\end_inset
+
+ es una matriz cuyas columnas tienen MEDIA CERO
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+\lang spanish
+PROPIEDADES 
+\end_layout
+
+\begin_layout Itemize
+
+\lang spanish
+\begin_inset Formula $H$
+\end_inset
+
+ es idempotente, es decir: 
+\begin_inset Formula $H\times H=H$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+
+\lang spanish
+\begin_inset Formula $rang(H)=traza(H)=n-1$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+
+\lang spanish
+Media Muestral 
+\begin_inset Formula $"\bar{X}"$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\lang spanish
+Sea 
+\begin_inset Formula $"X"$
+\end_inset
+
+ una matriz de 
+\begin_inset Quotes cld
+\end_inset
+
+n
+\begin_inset Quotes crd
+\end_inset
+
+ datos por 
+\begin_inset Quotes cld
+\end_inset
+
+p
+\begin_inset Quotes crd
+\end_inset
+
+ variables de interes, entonces la media muestral de cada una de estas variables
+ esta dada por:
+\end_layout
+
+\begin_layout Standard
+
+\lang spanish
+\begin_inset Formula 
+\[
+\boxed{\bar{X}=\frac{1}{n}\cdot X'\cdot\bar{1}_{n}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\lang spanish
+Donde 
+\begin_inset Formula $\bar{1}_{n}$
+\end_inset
+
+es un vector de unos de dimensión 
+\begin_inset Formula $n\times1$
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout Subsection
+
+\lang spanish
+Matriz de Varianza - Covarianza 
+\begin_inset Formula $"S"$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\lang spanish
+\begin_inset Formula 
+\[
+\boxed{S=\frac{1}{n}\cdot X'\cdot H\cdot X}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+
+\lang spanish
+Matriz 
+\begin_inset Formula $"D"$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\lang spanish
+Donde 
+\begin_inset Formula $"D"$
+\end_inset
+
+ es una matriz obtenida a partir de los componentes de la diagonal de la
+ matriz 
+\begin_inset Formula $"S"$
+\end_inset
+
+ y esta dada por : 
+\end_layout
+
+\begin_layout Standard
+
+\lang spanish
+\begin_inset Formula 
+\[
+D=\begin{cases}
+d_{ij}=s_{ij} & \mbox{,Para }i=j\\
+d_{ij}=0 & \mbox{,Para }i\neq j
+\end{cases}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\lang spanish
+Una matriz muy utilizada es la matriz 
+\begin_inset Formula $D^{-1/2}$
+\end_inset
+
+, los comanados para implementarla en matlab son los siguientes:
+\end_layout
+
+\begin_layout Standard
+
+\lang spanish
+\begin_inset Float algorithm
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+
+\lang spanish
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{alltt}
+\end_layout
+
+\begin_layout Plain Layout
+
+% Sea "X" la matriz de datos de dimensión nxp
+\end_layout
+
+\begin_layout Plain Layout
+
+S = X'*H*X/n;
+\end_layout
+
+\begin_layout Plain Layout
+
+D1_2 = inv(diag(sqrt(diag(S))); % Matriz D^(-1/2)
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{alltt}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\lang spanish
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+
+\lang spanish
+Codigo en MatLab para calcular la matriz 
+\begin_inset Formula $D^{-1/2}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+
+\lang spanish
+Matriz de Correlación 
+\begin_inset Formula $"R"$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\lang spanish
+\begin_inset Formula 
+\[
+\boxed{R=D^{-1/2}\cdot S\cdot D^{-1/2}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+
+\lang spanish
+Matriz de Datos Estandarizados 
+\begin_inset Formula $X_{0}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\lang spanish
+\begin_inset Formula 
+\[
+\boxed{X_{0}=H\cdot X\cdot D^{-1/2}}
+\]
+
+\end_inset
+
+ Donde: 
+\end_layout
+
+\begin_layout Itemize
+
+\lang spanish
+\begin_inset Formula $X$
+\end_inset
+
+ : Es la matriz de datos, de dimensión nxp
+\end_layout
+
+\begin_layout Itemize
+
+\lang spanish
+\begin_inset Formula $H:$
+\end_inset
+
+ Es la matriz de centrado de dimensión nxn
+\end_layout
+
+\begin_layout Itemize
+
+\lang spanish
+\begin_inset Formula $D^{-1/2}$
+\end_inset
+
+: Esta dada por
+\begin_inset Formula $D^{-1/2}=diag(S)^{-1/2}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+
+\lang spanish
+\begin_inset Formula $X_{0}$
+\end_inset
+
+: Matriz de datos estandarizados, es decir 
+\begin_inset Formula $\left(\mu=0,\sigma=1\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+
+\lang spanish
+Distancia de Mahalanobis
+\end_layout
+
+\begin_layout Standard
+
+\lang spanish
+Es una forma de determinar la similitud entre dos variables aleatorias 
+\begin_inset Quotes cld
+\end_inset
+
+multidimensionales
+\begin_inset Quotes crd
+\end_inset
+
+.
+ Se diferencia de la distancia euclídea en que tiene en cuenta la correlación
+ entre las variables aleatorias.
+\end_layout
+
+\begin_layout Standard
+
+\lang spanish
+Formalmente, la distancia de Mahalanobis entre dos variables aleatorias
+ con la 
+\series bold
+misma distribución de probabilidad 
+\begin_inset Formula $X$
+\end_inset
+
+ y 
+\begin_inset Formula $Y$
+\end_inset
+
+ 
+\series default
+con matriz de covarianza 
+\begin_inset Formula $\mathbf{\Sigma}$
+\end_inset
+
+ se define como:
+\end_layout
+
+\begin_layout Standard
+
+\lang spanish
+\begin_inset Formula 
+\[
+\boxed{d_{m}\left(X,Y\right)=\sqrt{\left(X-Y\right)'\cdot\Sigma^{-1}\cdot\left(X-Y\right)}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\lang spanish
+A continuación se muestra la función implementada en MatLab:
+\end_layout
+
+\begin_layout Standard
+
+\lang spanish
+\begin_inset Float algorithm
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+
+\lang spanish
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{alltt}
+\end_layout
+
+\begin_layout Plain Layout
+
+% La funcion D=maha(X) calcula una matriz de cuadrados de distancias.
+ El elemento (i,j)
+\end_layout
+
+\begin_layout Plain Layout
+
+% de la matriz D contiene el cuadrado d ela distancia de Mahalanobis entre
+ la fila "i"
+\end_layout
+
+\begin_layout Plain Layout
+
+% y la fila "j" d ela matriz X.
+\end_layout
+
+\begin_layout Plain Layout
+
+% Entradas: una matriz X de dimension nxp.
+\end_layout
+
+\begin_layout Plain Layout
+
+% Salidas: una matriz D de dimension nxn.
+\end_layout
+
+\begin_layout Plain Layout
+
+%
+\end_layout
+
+\begin_layout Plain Layout
+
+function D = maha(X)
+\end_layout
+
+\begin_layout Plain Layout
+
+[n,p] = size(X);
+\end_layout
+
+\begin_layout Plain Layout
+
+% calculo del vector de medias y de la matriz de covarianzas de X:
+\end_layout
+
+\begin_layout Plain Layout
+
+S = cov(X,1);
+\end_layout
+
+\begin_layout Plain Layout
+
+% calculo de las distancias de Mahalanobis (al cuadrado):
+\end_layout
+
+\begin_layout Plain Layout
+
+D = zeros(n);
+\end_layout
+
+\begin_layout Plain Layout
+
+invS=inv(S);
+\end_layout
+
+\begin_layout Plain Layout
+
+for i = 1:n
+\end_layout
+
+\begin_layout Plain Layout
+
+	for j = i+1:n
+\end_layout
+
+\begin_layout Plain Layout
+
+		D(i,j) = (X(i,:)-X(j,:))*invS*(X(i,:)-X(j,:))';
+\end_layout
+
+\begin_layout Plain Layout
+
+	end
+\end_layout
+
+\begin_layout Plain Layout
+
+end
+\end_layout
+
+\begin_layout Plain Layout
+
+D = D+D';
+\end_layout
+
+\begin_layout Plain Layout
+
+end
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{alltt}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\lang spanish
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+
+\lang spanish
+Función de Mahalanobis
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+
+\lang spanish
+Analisis de Componentes Principales (ACP)
+\end_layout
+
+\begin_layout Standard
+
+\lang spanish
+Muchas veces los datos son demasiado extensos y muchos de los cuales no
+ son significantes y si los incluimos como entradas en la red neuronal,
+ estos incrementaran el calculo computacional y ocacionaran que la red demore
+ en aprender o incluso que jamás logre aprender, para ello se realiza un
+ ACP, que nos permite simplificar los datos con la menor cantidad de perdida
+ de información.
+\end_layout
+
+\begin_layout Standard
+
+\lang spanish
+El ACP parte de una matriz de datos (centrada, es decir media igual a cero
+ ) de 
+\begin_inset Quotes cld
+\end_inset
+
+n
+\begin_inset Quotes crd
+\end_inset
+
+ filas y 
+\begin_inset Quotes cld
+\end_inset
+
+p
+\begin_inset Quotes crd
+\end_inset
+
+ columnas, que pued considerarse como una muestra de tamaño 
+\begin_inset Quotes cld
+\end_inset
+
+n
+\begin_inset Quotes crd
+\end_inset
+
+ de un vector aleatorio de dimensión 
+\begin_inset Quotes cld
+\end_inset
+
+p
+\begin_inset Quotes crd
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\lang spanish
+\begin_inset Formula 
+\[
+X=\left[X_{1},X_{2},...,X_{p}\right]'
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\lang spanish
+Se considera la combinación lineal (univariante) de 
+\begin_inset Formula $X$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\lang spanish
+\begin_inset Formula 
+\[
+Y=X't
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\lang spanish
+Donde 
+\begin_inset Formula $"t"$
+\end_inset
+
+ es un vector de pesos de dimensión 
+\begin_inset Quotes cld
+\end_inset
+
+p
+\begin_inset Quotes crd
+\end_inset
+
+.
+ La primera componente principal aparece como la solución al problema de
+ encontral el vector 
+\begin_inset Formula $"t"$
+\end_inset
+
+ que maximiza la varainza de 
+\begin_inset Formula $"Y"$
+\end_inset
+
+ con la condición de normalización 
+\begin_inset Formula $t'\cdot t=1$
+\end_inset
+
+.
+ En otras palabras, la expresión 
+\begin_inset Formula $Var\left(Y\right)$
+\end_inset
+
+ en función del vector de pesos 
+\begin_inset Formula $"t"$
+\end_inset
+
+ da lugar a un problema variacional que viene por la solución de la primera
+ componente principal.
+ Este problema equivale a encontrar los autovalores y autovectores d ela
+ matriz de covarianzas de 
+\begin_inset Formula $"X"$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Part
+Creación de gráficas y visualizaciones
+\end_layout
+
+\begin_layout Standard
+https://nbviewer.jupyter.org/github/GoogleCloudPlatform/training-data-analyst/blob
+/master/courses/machine_learning/diagrams/cpb102diagrams.ipynb
+\end_layout
+
+\begin_layout Standard
+https://machinelearningmastery.com/test-time-augmentation-with-scikit-learn/
+\end_layout
+
+\begin_layout Standard
+https://colab.research.google.com/drive/1A3TALnuDj0FXqvSBM96Es6BEKaZwbkVz?usp=shari
+ng&fbclid=IwAR2ysx4WX6MEd2GPaAuHrsmkKKiFpIuaF8SjwuaR6SpbW8PeDrtyzs8licc#scrollTo
+=XHozpHKnhxLL
+\end_layout
+
+\begin_layout Standard
+https://planetachatbot.com/aprendizaje-no-supervisado-para-multiples-clases-en-py
+thon-407cb6be878c
+\end_layout
+
+\begin_layout Part
 Machine Learning
 \end_layout
 
