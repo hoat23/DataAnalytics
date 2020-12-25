@@ -306,6 +306,8 @@ titanic_df.agg(
 </tr>
 
 </table>
+
+
 # References
 - https://www.microsoft.com/en-us/research/wp-content/uploads/2017/03/main.pdf
 - https://eql.readthedocs.io/en/latest/query-guide/joins.html
