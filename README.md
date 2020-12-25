@@ -307,7 +307,26 @@ titanic_df.agg(
 
 </table>
 
+## SQL-Elasticsearch in PowerSheell
 
-# References
+```
+$connectstring = "DSN=Local Elasticsearch;"
+$sql = "SELECT * FROM library"
+
+$conn = New-Object System.Data.Odbc.OdbcConnection($connectstring)
+$conn.open()
+$cmd = New-Object system.Data.Odbc.OdbcCommand($sql,$conn)
+$da = New-Object system.Data.Odbc.OdbcDataAdapter($cmd)
+$dt = New-Object system.Data.datatable
+$null = $da.fill($dt)
+$conn.close()
+$dt
+```
+
+
+### Reference
+- https://www.elastic.co/guide/en/elasticsearch/reference/current/sql-client-apps-ps1.html
+
+## References
 - https://www.microsoft.com/en-us/research/wp-content/uploads/2017/03/main.pdf
 - https://eql.readthedocs.io/en/latest/query-guide/joins.html
