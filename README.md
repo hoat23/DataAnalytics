@@ -331,3 +331,4 @@ $dt
 - https://www.microsoft.com/en-us/research/wp-content/uploads/2017/03/main.pdf
 - https://eql.readthedocs.io/en/latest/query-guide/joins.html
 - https://dataplatform.cloud.ibm.com/exchange/public/entry/view/8bddf7f7e5d004a009c643750b16d0c0
+- https://github.com/IBM/elasticsearch-spark-recommender
