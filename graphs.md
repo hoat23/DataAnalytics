@@ -1,4 +1,6 @@
 
+# GRAPHVIZ
+
 ## Install Graphviz
 
 ### For Windows:
@@ -11,4 +13,8 @@
 ### For Ubuntu
 
 - sudo apt-get install graphviz
+
+## Documentation
+
+- https://graphviz.readthedocs.io/en/stable/manual.html
 
